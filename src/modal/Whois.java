@@ -28,9 +28,6 @@ public class Whois {
         return anInt;
     }
 
-    public void setAnInt(int anInt) {
-        this.anInt = anInt;
-    }
 
     @Override
     public boolean equals(Object o) {
