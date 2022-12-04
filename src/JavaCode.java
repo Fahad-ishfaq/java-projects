@@ -1,6 +1,7 @@
 import modal.Whois;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class JavaCode {
 
@@ -55,10 +56,145 @@ public class JavaCode {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println("run");
-        minMax(List.of(new Integer[]{426980153, 354802167, 142980735, 968217435, 734892650}));
+    public static int findMedian(List<Integer> arr) {
+        int center = arr.size() / 2;
+        List<Integer> newarr = arr.stream().sorted().collect(Collectors.toList());
+        return newarr.get(center);
+
     }
+
+    public static int lonelyinteger(List<Integer> a) {
+        int unique = 0;
+        Map<Integer, Long> counting = a.stream().collect(Collectors.groupingBy(integer -> integer, Collectors.counting()));
+        for (int key : counting.keySet()) {
+            if (counting.get(key) == 1) {
+                unique = key;
+            }
+        }
+        return unique;
+    }
+
+
+    public static int diagonalDifference(List<List<Integer>> arr) {
+        Integer leftToRight = 0;
+        Integer rightToLeft = 0;
+        int matrixLen = arr.size();
+        int i = 0;
+        int j = matrixLen-1;
+        for(List<Integer> integerList: arr) {
+            leftToRight = leftToRight + integerList.get(i);
+            rightToLeft += integerList.get(j);
+            i ++; j--;
+        }
+
+        return Math.abs(leftToRight - rightToLeft);
+    }
+
+    public static List<Integer> countingSort(List<Integer> arr) {
+        // Write your code here
+        int[] frequencyArray = new int[101];
+        List<Integer> sortedArray = new ArrayList<>(100);
+        for (Integer integer: arr) {
+            frequencyArray[integer] = frequencyArray[integer] + 1;
+        }
+        for (int number = 0; number < 100; number++) {
+            sortedArray.add(frequencyArray[number]);
+        }
+        return sortedArray;
+    }
+    public static int flippingMatrix(List<List<Integer>> matrix) {
+        // Write your code here
+        int sum = 0;
+        int n = matrix.size();
+        for (int i = 0; i < matrix.size() / 2; i++){
+            for (int j = 0; j < matrix.size() / 2; j++){
+                sum += getLargest(new Integer[]{matrix.get(i).get(j), matrix.get(i).get(n - j -1),
+                        matrix.get(n - i - 1).get(j), matrix.get(n - i - 1).get(n - j - 1)});
+            }
+        }
+        return sum;
+    }
+
+    public static int getLargest(Integer[] a){
+        List<Integer> list=Arrays.asList(a);
+        Collections.sort(list);
+
+        int element=list.get(list.size()-1);
+        return element;
+    }
+
+    public static void preOrder(Node root) {
+        System.out.print(root.data + " ");
+        if (root.left != null) {
+            preOrder(root.left);
+        }
+        if (root.right != null) {
+            preOrder(root.right);
+        }
+
+    }
+
+    public static void noPrefix(List<String> words) {
+        // Write your code here
+        boolean good = true;
+        String badString = "";
+        for (int i = 0; i < words.size(); i ++) {
+            String newBadString = "";
+            String firstSting = words.get(i);
+            for (int j = 0; j<words.size(); j++) {
+                String secondString = words.get(j);
+                if (i == j || j < i) {
+                    continue;
+                }
+                if (secondString.startsWith(firstSting)) {
+                    good = false;
+                    newBadString = secondString;
+                    break;
+                }
+            }
+            if (newBadString.length() > badString.length() || (words.indexOf(newBadString) >=0 && words.indexOf(newBadString) < words.indexOf(badString))){
+                badString = newBadString;
+            }
+        }
+        if (good) {
+            System.out.println("GOOD SET");
+        } else {
+            System.out.println("BAD SET");
+            System.out.println(badString);
+        }
+    }
+
+    void decode(String s, Node root) {
+//        Huffman coding
+        Node tempNode = root;
+        for (int i = 0; i< s.length(); i++) {
+            if (s.substring(i,i+1).equals("0")) {
+                tempNode = tempNode.left;
+            } else {
+                tempNode = tempNode.right;
+            }
+
+            if (tempNode.left == null && tempNode.right==null) {
+                System.out.print(tempNode.data);
+                tempNode = root;
+            }
+        }
+    }
+
+
+
+
+    public static void main(String[] args) {
+        String s = "abc";
+        char data;
+        System.out.printf(data);
+    }
+}
+
+class Node {
+    int data;
+    Node left;
+    Node right;
 }
 
 
