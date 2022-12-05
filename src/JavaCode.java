@@ -181,13 +181,39 @@ public class JavaCode {
         }
     }
 
+    public static final int factorial(int number) {
+        int i, fact = 1;
+        for(i=1;i<=number;i++) {
+            fact = fact * i;
+        }
+        return fact;
+    }
 
+    public static int countTeams(List<Integer> skills, int minPlayers, int minLevel, int maxLevel) {
+        List<Integer> singleList = new ArrayList<>();
+        List<Integer> newList = skills.stream().map(integer -> {
+            if (integer>= minLevel && integer <= maxLevel && !singleList.contains(integer)) {
+                singleList.add(integer);
+                return integer;
+            } else {
+                return null;
+            }
+        }).filter(x -> x!= null).collect(Collectors.toList());
+        System.out.println(Arrays.toString(newList.toArray()));
+        int allFactorial = factorial(newList.size());
 
+        System.out.println(allFactorial);
+        int combination = 0;
+        for (int i = minPlayers; i <= newList.size(); i ++) {
+            int minFactorial = factorial(i);
+            int remaining = factorial(newList.size()  - i);
+            combination += allFactorial/(minFactorial * remaining);
+        }
+        return combination;
+    }
 
     public static void main(String[] args) {
-        String s = "abc";
-        char data;
-        System.out.printf(data);
+        System.out.println(countTeams(List.of(4, 4, 8, 5, 6, 10, 7, 9), 2, 7, 10));
     }
 }
 
