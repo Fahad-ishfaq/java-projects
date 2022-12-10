@@ -1,4 +1,5 @@
 import modal.Whois;
+import modal.WhoisChild;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,12 +15,12 @@ public class JavaCode {
         long max = Long.MIN_VALUE;
         System.out.println(max);
 
-        for (int i = 0; i < arr.size(); i ++) {
+        for (int i = 0; i < arr.size(); i++) {
             long oneSum = 0;
-            for (int j = i; j < arr.size() -1 + i; j ++) {
+            for (int j = i; j < arr.size() - 1 + i; j++) {
                 int k = j;
                 if (j >= arr.size()) {
-                    k = j - arr.size() ;
+                    k = j - arr.size();
                 }
                 oneSum += arr.get(k);
             }
@@ -80,11 +81,12 @@ public class JavaCode {
         Integer rightToLeft = 0;
         int matrixLen = arr.size();
         int i = 0;
-        int j = matrixLen-1;
-        for(List<Integer> integerList: arr) {
+        int j = matrixLen - 1;
+        for (List<Integer> integerList : arr) {
             leftToRight = leftToRight + integerList.get(i);
             rightToLeft += integerList.get(j);
-            i ++; j--;
+            i++;
+            j--;
         }
 
         return Math.abs(leftToRight - rightToLeft);
@@ -94,7 +96,7 @@ public class JavaCode {
         // Write your code here
         int[] frequencyArray = new int[101];
         List<Integer> sortedArray = new ArrayList<>(100);
-        for (Integer integer: arr) {
+        for (Integer integer : arr) {
             frequencyArray[integer] = frequencyArray[integer] + 1;
         }
         for (int number = 0; number < 100; number++) {
@@ -102,24 +104,25 @@ public class JavaCode {
         }
         return sortedArray;
     }
+
     public static int flippingMatrix(List<List<Integer>> matrix) {
         // Write your code here
         int sum = 0;
         int n = matrix.size();
-        for (int i = 0; i < matrix.size() / 2; i++){
-            for (int j = 0; j < matrix.size() / 2; j++){
-                sum += getLargest(new Integer[]{matrix.get(i).get(j), matrix.get(i).get(n - j -1),
+        for (int i = 0; i < matrix.size() / 2; i++) {
+            for (int j = 0; j < matrix.size() / 2; j++) {
+                sum += getLargest(new Integer[]{matrix.get(i).get(j), matrix.get(i).get(n - j - 1),
                         matrix.get(n - i - 1).get(j), matrix.get(n - i - 1).get(n - j - 1)});
             }
         }
         return sum;
     }
 
-    public static int getLargest(Integer[] a){
-        List<Integer> list=Arrays.asList(a);
+    public static int getLargest(Integer[] a) {
+        List<Integer> list = Arrays.asList(a);
         Collections.sort(list);
 
-        int element=list.get(list.size()-1);
+        int element = list.get(list.size() - 1);
         return element;
     }
 
@@ -138,10 +141,10 @@ public class JavaCode {
         // Write your code here
         boolean good = true;
         String badString = "";
-        for (int i = 0; i < words.size(); i ++) {
+        for (int i = 0; i < words.size(); i++) {
             String newBadString = "";
             String firstSting = words.get(i);
-            for (int j = 0; j<words.size(); j++) {
+            for (int j = 0; j < words.size(); j++) {
                 String secondString = words.get(j);
                 if (i == j || j < i) {
                     continue;
@@ -152,7 +155,7 @@ public class JavaCode {
                     break;
                 }
             }
-            if (newBadString.length() > badString.length() || (words.indexOf(newBadString) >=0 && words.indexOf(newBadString) < words.indexOf(badString))){
+            if (newBadString.length() > badString.length() || (words.indexOf(newBadString) >= 0 && words.indexOf(newBadString) < words.indexOf(badString))) {
                 badString = newBadString;
             }
         }
@@ -167,14 +170,14 @@ public class JavaCode {
     void decode(String s, Node root) {
 //        Huffman coding
         Node tempNode = root;
-        for (int i = 0; i< s.length(); i++) {
-            if (s.substring(i,i+1).equals("0")) {
+        for (int i = 0; i < s.length(); i++) {
+            if (s.substring(i, i + 1).equals("0")) {
                 tempNode = tempNode.left;
             } else {
                 tempNode = tempNode.right;
             }
 
-            if (tempNode.left == null && tempNode.right==null) {
+            if (tempNode.left == null && tempNode.right == null) {
                 System.out.print(tempNode.data);
                 tempNode = root;
             }
@@ -183,7 +186,7 @@ public class JavaCode {
 
     public static final int factorial(int number) {
         int i, fact = 1;
-        for(i=1;i<=number;i++) {
+        for (i = 1; i <= number; i++) {
             fact = fact * i;
         }
         return fact;
@@ -192,28 +195,51 @@ public class JavaCode {
     public static int countTeams(List<Integer> skills, int minPlayers, int minLevel, int maxLevel) {
         List<Integer> singleList = new ArrayList<>();
         List<Integer> newList = skills.stream().map(integer -> {
-            if (integer>= minLevel && integer <= maxLevel && !singleList.contains(integer)) {
+            if (integer >= minLevel && integer <= maxLevel && !singleList.contains(integer)) {
                 singleList.add(integer);
                 return integer;
             } else {
                 return null;
             }
-        }).filter(x -> x!= null).collect(Collectors.toList());
+        }).filter(x -> x != null).collect(Collectors.toList());
         System.out.println(Arrays.toString(newList.toArray()));
         int allFactorial = factorial(newList.size());
 
         System.out.println(allFactorial);
         int combination = 0;
-        for (int i = minPlayers; i <= newList.size(); i ++) {
+        for (int i = minPlayers; i <= newList.size(); i++) {
             int minFactorial = factorial(i);
-            int remaining = factorial(newList.size()  - i);
-            combination += allFactorial/(minFactorial * remaining);
+            int remaining = factorial(newList.size() - i);
+            combination += allFactorial / (minFactorial * remaining);
         }
         return combination;
     }
 
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int num1Size = nums1.length;
+        int num2Size = nums2.length;
+        int[] combinedArray = new int[num1Size + num2Size];
+
+        for (int i = 0; i < num1Size; i++)  {
+            combinedArray[i] = nums1[i];
+        }
+        for (int i = 0; i < num2Size; i++)  {
+            combinedArray[num1Size +i] = nums2[i];
+        }
+        combinedArray = Arrays.stream(combinedArray).sorted().toArray();
+        double mean = 0;
+        if (combinedArray.length % 2 != 0) {
+            mean = combinedArray[combinedArray.length / 2];
+        } else {
+            mean = (double) (combinedArray[(combinedArray.length / 2) - 1] + combinedArray[(combinedArray.length / 2)]) / 2;
+
+        }
+        return mean;
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(countTeams(List.of(4, 4, 8, 5, 6, 10, 7, 9), 2, 7, 10));
+        System.out.println(findMedianSortedArrays(new int[] {0,0,0,0,0}, new int[]{-1,0,0,0,0,0,1}));
     }
 }
 
